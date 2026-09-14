@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single();
 
-  const roles = profile?.roles ?? ["player"];
+  const roles: string[] = profile?.roles ?? ["player"];
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
