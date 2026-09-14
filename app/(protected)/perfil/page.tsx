@@ -16,19 +16,30 @@ export default async function PerfilPage() {
     .eq("id", user.id)
     .single();
 
-  const { data: resume } = await supabase
-    .from("player_resumes")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
+  if (!profile) {
+    redirect("/login");
+  }
+
+  const roles: string[] = profile.roles ?? ["player"];
+  const isPlayer = roles.includes("player");
+
+  const { data: resume } = isPlayer
+    ? await supabase
+        .from("player_resumes")
+        .select("*")
+        .eq("user_id", user.id)
+        .single()
+    : { data: null };
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Meu Perfil</h1>
-        <p className="text-sm text-neutral-500">Atualize seus dados e currículo</p>
+        <p className="text-sm text-neutral-500">
+          {isPlayer ? "Atualize seus dados e currículo" : "Atualize seus dados pessoais"}
+        </p>
       </div>
-      <PerfilForm profile={profile!} resume={resume} />
+      <PerfilForm profile={profile} resume={resume} isPlayer={isPlayer} />
     </div>
   );
 }

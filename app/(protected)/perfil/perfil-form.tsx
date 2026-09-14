@@ -72,16 +72,16 @@ const STATES = [
 export function PerfilForm({
   profile,
   resume,
+  isPlayer = false,
 }: {
   profile: Profile;
   resume: PlayerResume | null;
+  isPlayer?: boolean;
 }) {
   const router = useRouter();
   const supabase = createClient();
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
-
-  const isPlayer = profile.roles.includes("player");
 
   // Profile fields
   const [fullName, setFullName] = useState(profile.full_name || "");
