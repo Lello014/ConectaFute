@@ -36,7 +36,11 @@ export default function CadastroPage() {
     });
 
     if (error) {
-      setError(error.message);
+      if (error.message.includes("already registered")) {
+        setError("Este email ja esta cadastrado. Faca login.");
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
       return;
     }
