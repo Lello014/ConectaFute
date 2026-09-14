@@ -33,6 +33,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Rotas protegidas (agora com o route group (protected))
   const protectedRoutes = ["/dashboard", "/perfil", "/times", "/torneios", "/amistosos", "/vagas", "/locais"];
   const isProtectedRoute = protectedRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route)
