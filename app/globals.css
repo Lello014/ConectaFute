@@ -1,38 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --font-geist-sans: "Geist", system-ui, sans-serif;
-  --font-geist-mono: "Geist Mono", monospace;
+  --color-primary: #059669;
+  --color-primary-hover: #047857;
+  --color-primary-light: #d1fae5;
 }
 
-html {
-  scroll-behavior: smooth;
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Background pattern */
 .app-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-image: radial-gradient(circle at 25% 25%, rgba(5, 150, 105, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(5, 150, 105, 0.02) 0%, transparent 50%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #f0fdf4 100%);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
-  border-radius: 3px;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #525252;
+@media (prefers-color-scheme: dark) {
+  .app-bg {
+    background: linear-gradient(135deg, #022c22 0%, #0a0a0a 50%, #022c22 100%);
+  }
 }
