@@ -26,10 +26,17 @@ export default async function DashboardPage() {
 
   // Dashboard do capitão/time
   if (primaryRole === "captain") {
+    const { data: team } = await supabase
+      .from("teams")
+      .select("name")
+      .eq("captain_id", user.id)
+      .single();
+
     return (
       <div>
-        <h1 className="text-2xl font-bold">Dashboard do Capitão</h1>
-        <p className="mt-2 text-neutral-500">Gerencie seu time aqui.</p>
+        <h1 className="text-2xl font-bold">
+          Bem-vindo, <span className="text-emerald-400">{team?.name || profile?.full_name}</span>
+        </h1>
       </div>
     );
   }
@@ -38,8 +45,9 @@ export default async function DashboardPage() {
   if (primaryRole === "organizer") {
     return (
       <div>
-        <h1 className="text-2xl font-bold">Dashboard do Organizador</h1>
-        <p className="mt-2 text-neutral-500">Gerencie seus torneios aqui.</p>
+        <h1 className="text-2xl font-bold">
+          Bem-vindo, <span className="text-emerald-400">{profile?.full_name}</span>
+        </h1>
       </div>
     );
   }
@@ -47,8 +55,9 @@ export default async function DashboardPage() {
   // Dashboard admin
   return (
     <div>
-      <h1 className="text-2xl font-bold">Dashboard Admin</h1>
-      <p className="mt-2 text-neutral-500">Painel administrativo.</p>
+      <h1 className="text-2xl font-bold">
+        Bem-vindo, <span className="text-emerald-400">{profile?.full_name}</span>
+      </h1>
     </div>
   );
 }
