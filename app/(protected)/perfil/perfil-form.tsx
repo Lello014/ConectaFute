@@ -15,6 +15,7 @@ interface Profile {
   avatar_url: string | null;
   nickname: string | null;
   roles: string[];
+  neighborhood: string | null;
 }
 
 interface PlayerResume {
@@ -37,6 +38,8 @@ interface PlayerResume {
   potential_rating: number;
   traits: string[];
   preferred_side: string;
+  neighborhood: string | null;
+  market_status: string;
 }
 
 const POSITIONS = [
@@ -110,6 +113,8 @@ export function PerfilForm({
   const [videoUrl, setVideoUrl] = useState(resume?.video_url || "");
   const [availability, setAvailability] = useState(resume?.availability || "disponivel");
   const [traits, setTraits] = useState<string[]>(resume?.traits || []);
+  const [neighborhood, setNeighborhood] = useState(resume?.neighborhood || profile.neighborhood || "");
+  const [marketStatus, setMarketStatus] = useState(resume?.market_status || "disponivel");
 
   function toggleTrait(t: string) {
     setTraits(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
@@ -131,6 +136,7 @@ export function PerfilForm({
         state: state || null,
         bio: bio || null,
         avatar_url: avatarUrl || null,
+        neighborhood: neighborhood || null,
       })
       .eq("id", profile.id);
 
@@ -161,6 +167,8 @@ export function PerfilForm({
         video_url: videoUrl || null,
         availability,
         traits,
+        neighborhood: neighborhood || null,
+        market_status: marketStatus,
       };
 
       const { error: resErr } = await supabase
@@ -214,6 +222,9 @@ export function PerfilForm({
           </Field>
           <Field label="Foto (URL)">
             <input value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} className={inputCls} placeholder="https://..." />
+          </Field>
+          <Field label="Bairro/Região">
+            <input value={neighborhood} onChange={e => setNeighborhood(e.target.value)} className={inputCls} placeholder="Ex: Centro, Zona Sul" />
           </Field>
         </div>
         <Field label="Bio">
@@ -286,6 +297,27 @@ export function PerfilForm({
                       : "border-neutral-700 bg-neutral-800 text-neutral-400 hover:border-neutral-600"
                   }`}>
                   {a === "disponivel" ? "Disponível" : a === "em_negociacao" ? "Em Negociação" : "Indisponível"}
+                </button>
+              ))}
+            </div>
+          </Field>
+
+          <Field label="Status de Mercado">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "disponivel", label: "Disponível", desc: "Aberto a propostas" },
+                { value: "apenas_avulso", label: "Apenas Avulso", desc: "Só substituições" },
+                { value: "fechando_elenco", label: "Fechando Elenco", desc: "Negociando" },
+                { value: "indisponivel", label: "Indisponível", desc: "Não aceita propostas" },
+              ].map(opt => (
+                <button key={opt.value} type="button" onClick={() => setMarketStatus(opt.value)}
+                  className={`rounded-lg border px-3 py-2 text-left transition ${
+                    marketStatus === opt.value
+                      ? "border-emerald-500 bg-emerald-500/10"
+                      : "border-neutral-700 bg-neutral-800 hover:border-neutral-600"
+                  }`}>
+                  <p className={`text-xs font-bold ${marketStatus === opt.value ? "text-emerald-400" : "text-neutral-300"}`}>{opt.label}</p>
+                  <p className="text-[10px] text-neutral-500">{opt.desc}</p>
                 </button>
               ))}
             </div>
