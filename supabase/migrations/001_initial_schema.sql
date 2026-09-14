@@ -1,5 +1,48 @@
 -- Conecta Fute - Schema Inicial
 -- Execute no SQL Editor do Supabase
+-- ATENCAO: Isso vai APAGAR tabelas existentes!
+
+-- Limpar tabelas existentes
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+DROP TRIGGER IF EXISTS set_profiles_updated_at ON public.profiles;
+DROP TRIGGER IF EXISTS set_teams_updated_at ON public.teams;
+DROP TRIGGER IF EXISTS set_player_resumes_updated_at ON public.player_resumes;
+DROP TRIGGER IF EXISTS set_player_contracts_updated_at ON public.player_contracts;
+DROP TRIGGER IF EXISTS set_job_offers_updated_at ON public.job_offers;
+DROP TRIGGER IF EXISTS set_reports_updated_at ON public.reports;
+
+DROP FUNCTION IF EXISTS public.handle_new_user();
+DROP FUNCTION IF EXISTS public.grant_role(public.app_role);
+DROP FUNCTION IF EXISTS public.set_updated_at();
+
+DROP TABLE IF EXISTS public.notifications CASCADE;
+DROP TABLE IF EXISTS public.reports CASCADE;
+DROP TABLE IF EXISTS public.venues CASCADE;
+DROP TABLE IF EXISTS public.referees CASCADE;
+DROP TABLE IF EXISTS public.player_stats CASCADE;
+DROP TABLE IF EXISTS public.achievements CASCADE;
+DROP TABLE IF EXISTS public.job_offers CASCADE;
+DROP TABLE IF EXISTS public.player_contracts CASCADE;
+DROP TABLE IF EXISTS public.player_resumes CASCADE;
+DROP TABLE IF EXISTS public.lineup_players CASCADE;
+DROP TABLE IF EXISTS public.lineups CASCADE;
+DROP TABLE IF EXISTS public.sponsors CASCADE;
+DROP TABLE IF EXISTS public.team_transactions CASCADE;
+DROP TABLE IF EXISTS public.matches CASCADE;
+DROP TABLE IF EXISTS public.tournament_teams CASCADE;
+DROP TABLE IF EXISTS public.tournaments CASCADE;
+DROP TABLE IF EXISTS public.friendlies CASCADE;
+DROP TABLE IF EXISTS public.team_members CASCADE;
+DROP TABLE IF EXISTS public.teams CASCADE;
+DROP TABLE IF EXISTS public.profiles CASCADE;
+
+DROP TYPE IF EXISTS public.app_role CASCADE;
+DROP TYPE IF EXISTS public.friendly_status CASCADE;
+DROP TYPE IF EXISTS public.tournament_status CASCADE;
+DROP TYPE IF EXISTS public.transaction_type CASCADE;
+DROP TYPE IF EXISTS public.transaction_category CASCADE;
+DROP TYPE IF EXISTS public.sponsor_status CASCADE;
+DROP TYPE IF EXISTS public.match_type CASCADE;
 
 -- Enums
 CREATE TYPE public.app_role AS ENUM ('admin', 'player', 'captain', 'organizer');
