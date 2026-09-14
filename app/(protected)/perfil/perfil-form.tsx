@@ -15,7 +15,6 @@ interface Profile {
   avatar_url: string | null;
   nickname: string | null;
   roles: string[];
-  neighborhood: string | null;
 }
 
 interface PlayerResume {
@@ -113,7 +112,7 @@ export function PerfilForm({
   const [videoUrl, setVideoUrl] = useState(resume?.video_url || "");
   const [availability, setAvailability] = useState(resume?.availability || "disponivel");
   const [traits, setTraits] = useState<string[]>(resume?.traits || []);
-  const [neighborhood, setNeighborhood] = useState(resume?.neighborhood || profile.neighborhood || "");
+  const [neighborhood, setNeighborhood] = useState(resume?.neighborhood || "");
   const [marketStatus, setMarketStatus] = useState(resume?.market_status || "disponivel");
 
   function toggleTrait(t: string) {
@@ -136,7 +135,6 @@ export function PerfilForm({
         state: state || null,
         bio: bio || null,
         avatar_url: avatarUrl || null,
-        neighborhood: neighborhood || null,
       })
       .eq("id", profile.id);
 
@@ -223,9 +221,6 @@ export function PerfilForm({
           <Field label="Foto (URL)">
             <input value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} className={inputCls} placeholder="https://..." />
           </Field>
-          <Field label="Bairro/Região">
-            <input value={neighborhood} onChange={e => setNeighborhood(e.target.value)} className={inputCls} placeholder="Ex: Centro, Zona Sul" />
-          </Field>
         </div>
         <Field label="Bio">
           <textarea value={bio} onChange={e => setBio(e.target.value)} className={inputCls + " min-h-[80px]"} placeholder="Conte um pouco sobre você..." />
@@ -261,6 +256,9 @@ export function PerfilForm({
             </Field>
             <Field label="Nacionalidade">
               <input value={nationality} onChange={e => setNationality(e.target.value)} className={inputCls} placeholder="Brasileiro" />
+            </Field>
+            <Field label="Bairro/Região">
+              <input value={neighborhood} onChange={e => setNeighborhood(e.target.value)} className={inputCls} placeholder="Ex: Centro, Zona Sul" />
             </Field>
             <Field label="Pé Preferido">
               <select value={domFoot} onChange={e => setDomFoot(e.target.value)} className={inputCls}>

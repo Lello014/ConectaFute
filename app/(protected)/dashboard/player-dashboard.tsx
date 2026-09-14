@@ -82,7 +82,7 @@ export async function PlayerDashboard() {
           height={resume?.height || undefined}
           weight={resume?.weight || undefined}
           dominantFoot={resume?.dominant_foot || "destro"}
-          neighborhood={resume?.neighborhood || profile?.neighborhood || undefined}
+          neighborhood={resume?.neighborhood || undefined}
           overallRating={resume?.overall_rating || 50}
           potentialRating={resume?.potential_rating || 50}
           traits={resume?.traits || []}
